@@ -42,6 +42,7 @@ npm install
 
 # Start the development server
 npm start
+----
 💌 Contact
 Email:22cs048@drngpit.ac.in
 This project is a part of a hackathon run by 
