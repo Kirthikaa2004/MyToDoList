@@ -1,38 +1,147 @@
-.App {
+body {
+  background-image: url(https://i.pinimg.com/736x/32/28/d6/3228d6d8b4add513a1d6b4764ffee860.jpg);
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  max-width: 500px;
+  margin: 2rem auto;
   text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  margin-bottom: 20px;
+  color: #6a0dad;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.input-group {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: 2px solid #6a0dad;
+  outline: none;
+  font-size: 1rem;
+}
+
+.input-group button {
+  padding: 10px 16px;
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.input-group button:hover {
+  background-color: #4b0082;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  background-color: #f5f5f5;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.2s;
+}
+
+.task-item:hover {
+  transform: scale(1.02);
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.8rem;
+  margin: 0 8px;
+}
+
+.progress-badge {
+  background-color: #ffa500;
+}
+
+.completed-badge {
+  background-color: #28a745;
+}
+
+.toggle-btn, .delete-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-left: 5px;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn {
+  background-color: #17a2b8;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.toggle-btn:hover {
+  background-color: #138496;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #a71d2a;
+}
+
+.completed span {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+.google-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;                     /* space between icon & text */
+  padding: 12px 20px;
+  border: 2px solid #4285F4;     /* Google blue border */
+  background: white;             /* white background */
+  color: #4285F4;                /* Google blue text */
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 50px;           /* pill shape */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.google-login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.google-login-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.google-login-btn .google-icon {
+  width: 20px;
+  height: 20px;
 }
