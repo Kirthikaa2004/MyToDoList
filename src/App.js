@@ -1,15 +1,15 @@
 // src/App.js
 import React, { useState, useEffect } from "react";
-import { auth, provider, signInWithPopup, signOut } from "./firebase";
+import { auth, signInWithPopup, signOut, provider } from "./firebase";
 import "./App.css";
 
 function App() {
-  // — AUTH STATE —
   const [user, setUser] = useState(null);
-
-  // — TODO STATE —
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState("");
+
+  // 👉 Replace with YOUR Cyclic backend URL
+  const BASE_URL = "https://your-cyclic-app.cyclic.app";
 
   // — LOGIN —
   const loginWithGoogle = () => {
@@ -19,7 +19,6 @@ function App() {
         setUser(u);
         localStorage.setItem("user", JSON.stringify(u));
         localStorage.setItem("email", u.email);
-        // Load tasks after login
         loadTasks(u.email);
       })
       .catch((error) => {
@@ -45,7 +44,7 @@ function App() {
 
   // — LOAD TASKS —
   const loadTasks = (email) => {
-    fetch(`http://localhost:5000/tasks?email=${email}`)
+    fetch(`${BASE_URL}/tasks?email=${email}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch tasks");
         return res.json();
@@ -62,10 +61,10 @@ function App() {
     const email = localStorage.getItem("email");
     if (!task.trim() || !email) return;
 
-    fetch(`http://localhost:5000/tasks?email=${email}`, {
+    fetch(`${BASE_URL}/tasks?email=${email}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: task }),
+      body: JSON.stringify({ text: task })
     })
       .then((res) => res.json())
       .then((newTask) => {
@@ -82,8 +81,8 @@ function App() {
   const handleToggleStatus = (i) => {
     const t = tasks[i];
     const email = localStorage.getItem("email");
-    fetch(`http://localhost:5000/tasks/${t.id}/toggle?email=${email}`, {
-      method: "PUT",
+    fetch(`${BASE_URL}/tasks/${t.id}/toggle?email=${email}`, {
+      method: "PUT"
     })
       .then((res) => res.json())
       .then((updated) => {
@@ -101,8 +100,8 @@ function App() {
   const handleDelete = (i) => {
     const t = tasks[i];
     const email = localStorage.getItem("email");
-    fetch(`http://localhost:5000/tasks/${t.id}?email=${email}`, {
-      method: "DELETE",
+    fetch(`${BASE_URL}/tasks/${t.id}?email=${email}`, {
+      method: "DELETE"
     })
       .then(() => {
         const copy = [...tasks];
@@ -125,24 +124,12 @@ function App() {
     }
   }, []);
 
-  // — LOAD TASKS WHEN USER CHANGES —
-  useEffect(() => {
-    if (user) {
-      loadTasks(user.email);
-    } else {
-      setTasks([]);
-    }
-  }, [user]);
-
   return (
     <div className="container">
-      {/* AUTH UI */}
       {user ? (
         <div className="auth-header">
           <p>Welcome, {user.displayName}! 🎉</p>
-          <button onClick={logout} className="logout-btn">
-            Logout
-          </button>
+          <button onClick={logout} className="logout-btn">Logout</button>
         </div>
       ) : (
         <button onClick={loginWithGoogle} className="google-login-btn">
@@ -155,10 +142,9 @@ function App() {
         </button>
       )}
 
-      {/* TODO UI */}
       {user && (
         <>
-          <h1> My Stylish Todo List</h1>
+          <h1>My Stylish Todo List</h1>
           <div className="input-group">
             <input
               type="text"
@@ -166,25 +152,17 @@ function App() {
               value={task}
               onChange={(e) => setTask(e.target.value)}
             />
-            <button onClick={handleAddTask} disabled={!task.trim()}>
-              Add
-            </button>
+            <button onClick={handleAddTask}>Add</button>
           </div>
           <ul className="task-list">
             {tasks.map((t, i) => (
               <li
                 key={t.id}
-                className={`task-item ${
-                  t.status === "Completed" ? "completed" : ""
-                }`}
+                className={`task-item ${t.status === "Completed" ? "completed" : ""}`}
               >
                 <span>{t.text}</span>
                 <span
-                  className={`status-badge ${
-                    t.status === "Completed"
-                      ? "completed-badge"
-                      : "progress-badge"
-                  }`}
+                  className={`status-badge ${t.status === "Completed" ? "completed-badge" : "progress-badge"}`}
                 >
                   {t.status}
                 </span>
